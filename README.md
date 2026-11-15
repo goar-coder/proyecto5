@@ -97,5 +97,5 @@ main.py     crea la app FastAPI
 ## Datos de ejemplo útiles
 
 - Conciertos en Valencia: `EV001` (35 €), `EV002` (22,50 €, el más barato), `EV003` (agotado) y `EV004` (45 €).
-- Pedido de prueba: `PED-1001` con el email `laura.martinez@example.com`.
+- Pedido de prueba: `EH-1001` con el email `laura.martinez@example.com`.
 - Las políticas no dicen nada de parking ni de accesibilidad, así que el asistente debe responder que no tiene esa información.

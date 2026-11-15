@@ -247,7 +247,7 @@ for nodo in ("politicas", "eventos", "pedido"):
     g.add_edge(nodo, END)
 grafo = g.compile()
 
-for p in ["¿Puedo devolver una entrada?", "¿Qué conciertos hay?", "¿Cómo va el pedido PED-1001?"]:
+for p in ["¿Puedo devolver una entrada?", "¿Qué conciertos hay?", "¿Cómo va el pedido EH-1001?"]:
     r = grafo.invoke({"pregunta": p})
     print(r["intencion"], "→", r["respuesta"])
 # politicas → Consulto policies.md…

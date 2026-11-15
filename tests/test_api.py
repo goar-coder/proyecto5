@@ -20,7 +20,7 @@ def test_pagina_chat_libre_sin_mensajes_de_ejemplo():
     r = TestClient(main.app).get("/chat-libre")
     assert r.status_code == 200 and "text/html" in r.headers["content-type"]
     assert "/chat/confirmar" in r.text
-    assert "PED-1001" not in r.text and "SUGERENCIAS" not in r.text
+    assert "EH-1001" not in r.text and "SUGERENCIAS" not in r.text
 
 
 def test_chat_pendiente_y_confirmar(datos_temporales, monkeypatch):

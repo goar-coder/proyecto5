@@ -92,7 +92,7 @@ def main() -> None:
     chat(THREAD, "¿Cuál es la política de devoluciones?", "Turno 1 — Políticas")
     chat(THREAD, "¿Qué conciertos hay en Valencia?", "Turno 2 — Búsqueda de eventos")
     chat(THREAD, "¿Y el más barato de esos?", "Turno 3 — Referencia al turno anterior (memoria)")
-    chat(THREAD, "Quiero saber el estado del pedido PED-1001, mi email es laura@otrodominio.com",
+    chat(THREAD, "Quiero saber el estado del pedido EH-1001, mi email es laura@otrodominio.com",
          "Turno 4 — Pedido con email incorrecto")
     chat(THREAD, "Perdona, me equivoqué: el email es laura.martinez@example.com",
          "Turno 5 — Pedido con email correcto")

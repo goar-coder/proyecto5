@@ -20,7 +20,7 @@ def test_filtro_sin_mayusculas_ni_tildes(datos_temporales):
 
 
 def test_sin_filtros_devuelve_todo_y_ciudad_inexistente_nada(datos_temporales):
-    assert len(eventos.buscar_eventos()) == 12
+    assert len(eventos.buscar_eventos()) == 16
     assert eventos.buscar_eventos(ciudad="Bilbao") == []
 
 
@@ -32,18 +32,18 @@ def test_incluye_evento_agotado(datos_temporales):
 # --- pedidos ---------------------------------------------------------------
 
 def test_pedido_email_correcto(datos_temporales):
-    r = pedidos.consultar_pedido("PED-1001", "laura.martinez@example.com")
+    r = pedidos.consultar_pedido("EH-1001", "laura.martinez@example.com")
     assert r["encontrado"] is True and r["estado"] == "pagado"
 
 
 def test_pedido_email_correcto_sin_distinguir_mayusculas(datos_temporales):
-    r = pedidos.consultar_pedido(" ped-1001 ", "Laura.Martinez@Example.com")
+    r = pedidos.consultar_pedido(" eh-1001 ", "Laura.Martinez@Example.com")
     assert r["encontrado"] is True
 
 
 def test_pedido_email_incorrecto_e_inexistente_dan_el_mismo_mensaje(datos_temporales):
-    incorrecto = pedidos.consultar_pedido("PED-1001", "otra@example.com")
-    inexistente = pedidos.consultar_pedido("PED-9999", "laura.martinez@example.com")
+    incorrecto = pedidos.consultar_pedido("EH-1001", "otra@example.com")
+    inexistente = pedidos.consultar_pedido("EH-9999", "laura.martinez@example.com")
     assert incorrecto == inexistente
     assert incorrecto == {"encontrado": False, "mensaje": pedidos.MENSAJE_PEDIDO_NO_VERIFICADO}
     assert "estado" not in incorrecto
@@ -87,3 +87,27 @@ def test_datos_reales_no_se_tocan(datos_temporales):
     from tests.conftest import DATA_ORIGINAL
     reservas.reservar_entradas("EV001", 5)
     assert _disponibles(DATA_ORIGINAL, "EV001") == 120
+
+
+# --- filtro por mes --------------------------------------------------------
+
+def test_filtro_por_mes_con_ciudad_y_categoria(datos_temporales):
+    resultado = eventos.buscar_eventos(ciudad="Madrid", categoria="concierto", mes="2026-12")
+    assert [e["id"] for e in resultado] == ["EV013", "EV014", "EV015"]  # EV016 es de enero
+
+
+def test_filtro_por_mes_solo(datos_temporales):
+    resultado = eventos.buscar_eventos(mes="2027-01")
+    assert resultado and all(e["fecha"].startswith("2027-01") for e in resultado)
+    assert "EV016" in {e["id"] for e in resultado}
+
+
+@pytest.mark.parametrize("mes", ["diciembre", "2026-13", "2026-1", "12-2026"])
+def test_filtro_por_mes_invalido(datos_temporales, mes):
+    with pytest.raises(ValueError, match="AAAA-MM"):
+        eventos.buscar_eventos(mes=mes)
+
+
+def test_herramienta_buscar_eventos_mes_invalido_devuelve_error(datos_temporales):
+    from tools.eventhub_tools import buscar_eventos as herramienta
+    assert "error" in json.loads(herramienta.invoke({"mes": "diciembre"}))

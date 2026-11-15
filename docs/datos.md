@@ -4,7 +4,7 @@ Todos los datos son inventados y están en [data/](../data/). Se puede usar otra
 
 ## `events.json` — catálogo de eventos
 
-Lista de 12 objetos:
+Lista de 16 objetos:
 
 | Campo | Tipo | Ejemplo |
 |---|---|---|
@@ -25,8 +25,14 @@ Casos preparados para la demo:
 | EV003 | Gran Gala Sinfónica de Año Nuevo | Valencia | 60 € | **0 (agotado)** |
 | EV004 | Indie Fest Valencia | Valencia | 45 € | 300 |
 | EV009 | Derbi Madrileño | Madrid | 85 € | **0 (agotado)** |
+| EV013 | Rock en la Gran Vía (concierto, 2026-12-11) — evento del pedido EH-1003 | Madrid | 38 € | 150 |
+| EV014 | Coros de Navidad en el Retiro (concierto, 2026-12-19) | Madrid | 25 € | 80 |
+| EV015 | Sinfonía de Invierno (concierto, 2026-12-27) | Madrid | 55 € | **0 (agotado)** |
+| EV016 | Pop Madrid Live (concierto, **2027-01-22**: otro mes) | Madrid | 42 € | 200 |
 
 También hay eventos en Madrid, Sevilla, Barcelona y Málaga de varias categorías.
+
+EV013–EV016 se añadieron para la demo de LangGraph (ver [cambios_datos.md](cambios_datos.md)): con la pregunta «¿mi pedido EH-1003 es para un concierto en Madrid? Si es así, dime otros conciertos en Madrid ese mes» el agente encadena `consultar_pedido` y `buscar_eventos(ciudad="Madrid", categoria="concierto", mes="2026-12")`. EV016 está en enero para comprobar que el filtro `mes` lo excluye.
 
 `reservar_entradas` es lo único que **modifica** este fichero, y lo hace de forma atómica. La demo y los tests trabajan sobre una copia.
 
@@ -34,7 +40,7 @@ También hay eventos en Madrid, Sevilla, Barcelona y Málaga de varias categorí
 
 | Campo | Tipo | Ejemplo |
 |---|---|---|
-| `id_pedido` | string | `"PED-1001"` |
+| `id_pedido` | string | `"EH-1001"` |
 | `email` | string | `"laura.martinez@example.com"` |
 | `id_evento` | string | `"EV001"` |
 | `cantidad` | entero | `2` |
@@ -43,11 +49,12 @@ También hay eventos en Madrid, Sevilla, Barcelona y Málaga de varias categorí
 
 | Pedido | Email | Estado |
 |---|---|---|
-| PED-1001 | laura.martinez@example.com | pagado |
-| PED-1002 | carlos.ruiz@example.com | enviado |
-| PED-1003 | ana.gomez@example.com | cancelado |
-| PED-1004 | javier.lopez@example.com | reembolsado |
-| PED-1005 | marta.sanchez@example.com | pagado |
+| EH-1001 | laura.martinez@example.com | pagado |
+| EH-1002 | carlos.ruiz@example.com | enviado |
+| EH-1003 | ana.gomez@example.com | pagado (EV013, concierto en Madrid) |
+| EH-1004 | javier.lopez@example.com | reembolsado |
+| EH-1005 | marta.sanchez@example.com | pagado |
+| EH-1006 | pablo.diaz@example.com | cancelado |
 
 El id del pedido y el email se comparan sin distinguir mayúsculas y quitando espacios.
 

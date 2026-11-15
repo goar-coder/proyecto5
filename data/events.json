@@ -106,5 +106,41 @@
     "fecha": "2027-01-24T19:00:00",
     "precio": 48.0,
     "disponibles": 35
+  },
+  {
+    "id": "EV013",
+    "nombre": "Rock en la Gran Vía",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-11T21:00:00",
+    "precio": 38.0,
+    "disponibles": 150
+  },
+  {
+    "id": "EV014",
+    "nombre": "Coros de Navidad en el Retiro",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-19T19:00:00",
+    "precio": 25.0,
+    "disponibles": 80
+  },
+  {
+    "id": "EV015",
+    "nombre": "Sinfonía de Invierno",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2026-12-27T20:00:00",
+    "precio": 55.0,
+    "disponibles": 0
+  },
+  {
+    "id": "EV016",
+    "nombre": "Pop Madrid Live",
+    "ciudad": "Madrid",
+    "categoria": "concierto",
+    "fecha": "2027-01-22T20:30:00",
+    "precio": 42.0,
+    "disponibles": 200
   }
 ]

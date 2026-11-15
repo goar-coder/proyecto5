@@ -13,21 +13,28 @@ def _json(obj) -> str:
 
 
 @tool
-def buscar_eventos(ciudad: str | None = None, categoria: str | None = None) -> str:
+def buscar_eventos(
+    ciudad: str | None = None, categoria: str | None = None, mes: str | None = None
+) -> str:
     """Busca eventos de EventHub en el catálogo.
 
     Úsala siempre que el usuario pregunte por eventos, fechas, precios o
-    disponibilidad. Ambos filtros son opcionales y no distinguen mayúsculas ni tildes.
+    disponibilidad. Todos los filtros son opcionales; ciudad y categoría no
+    distinguen mayúsculas ni tildes.
 
     Args:
         ciudad: Ciudad del evento, p. ej. "Valencia", "Madrid".
         categoria: Tipo de evento, p. ej. "concierto", "teatro", "deporte", "comedia", "danza".
+        mes: Mes del evento en formato "AAAA-MM", p. ej. "2026-12" para diciembre de 2026.
 
     Returns:
         Lista JSON de eventos con id, nombre, ciudad, categoria, fecha (ISO),
-        precio (EUR) y disponibles (0 = agotado).
+        precio (EUR) y disponibles (0 = agotado), o {"error": ...} si un filtro no es válido.
     """
-    return _json(eventos.buscar_eventos(ciudad=ciudad, categoria=categoria))
+    try:
+        return _json(eventos.buscar_eventos(ciudad=ciudad, categoria=categoria, mes=mes))
+    except ValueError as e:
+        return _json({"error": str(e)})
 
 
 @tool
@@ -38,7 +45,7 @@ def consultar_pedido(id_pedido: str, email: str) -> str:
     si el usuario no ha dado alguno de los dos, pídeselo antes de llamar.
 
     Args:
-        id_pedido: Identificador del pedido, p. ej. "PED-1001".
+        id_pedido: Identificador del pedido, p. ej. "EH-1001".
         email: Email usado en la compra.
 
     Returns:
