@@ -60,6 +60,22 @@ Tests (no llaman a OpenAI):
 pytest
 ```
 
+## Versión LangGraph (grafos/)
+
+El asistente también está rehecho como grafo de LangGraph, en cuatro versiones que crecen una sobre otra (cada una con su tag de git):
+
+| Versión | Ejecutar | Qué añade |
+|---|---|---|
+| 1 | `python -m grafos.v1_grafo_simple` | Estado `TypedDict`, clasificación por reglas y arista condicional (sin LLM) |
+| 2 | `python -m grafos.v2_chatbot` | `MessagesState` y nodo chatbot con el prompt y las políticas |
+| 3 | `python -m grafos.v3_memoria --demo` | Checkpointer `InMemorySaver`, `thread_id` y `get_state` |
+| 4 | `python -m grafos.v4_herramientas` | Nodo de herramientas a mano, bucle chatbot ↔ herramientas y límite de pasos |
+
+- Diagramas: `python scripts/generar_diagramas.py` (sin API key).
+- Prueba de entrega: `python scripts/demo_grafos.py` (genera `docs/entrega_langgraph.md`).
+
+Detalles en [docs/langgraph_pruebas.md](docs/langgraph_pruebas.md), [docs/cambios_codigo.md](docs/cambios_codigo.md) y [docs/cambios_datos.md](docs/cambios_datos.md).
+
 ## Cómo funciona
 
 ### Paso 1 — Cadena LCEL ([llm/chain.py](llm/chain.py))
@@ -87,9 +103,10 @@ llm/        único sitio que habla con OpenAI: modelo, cadena LCEL, agente y pro
 memory/     checkpointer, recorte del historial y su middleware
 config/     lectura de OPENAI_API_KEY, OPENAI_MODEL y EVENTHUB_DATA_DIR desde .env
 data/       events.json, orders.json, policies.md (datos inventados)
-scripts/    demo_conversacion.py (prueba de entrega)
+scripts/    demo_conversacion.py (sesión 4), demo_grafos.py y generar_diagramas.py (LangGraph)
 static/     index.html: página de prueba del chatbot (GET /)
-tests/      pytest (servicios, recorte, flujo del agente con modelo falso, API)
+grafos/     versiones LangGraph v1–v4 y diagramas Mermaid
+tests/      pytest (servicios, recorte, flujo del agente con modelo falso, API, grafos)
 docs/       conversacion_prueba.md (salida de la demo)
 main.py     crea la app FastAPI
 ```
@@ -98,4 +115,5 @@ main.py     crea la app FastAPI
 
 - Conciertos en Valencia: `EV001` (35 €), `EV002` (22,50 €, el más barato), `EV003` (agotado) y `EV004` (45 €).
 - Pedido de prueba: `EH-1001` con el email `laura.martinez@example.com`.
+- Pedido de la demo LangGraph: `EH-1003` (`ana.gomez@example.com`), concierto en Madrid en diciembre de 2026 (EV013); otros conciertos en Madrid ese mes: EV014 y EV015 (agotado).
 - Las políticas no dicen nada de parking ni de accesibilidad, así que el asistente debe responder que no tiene esa información.

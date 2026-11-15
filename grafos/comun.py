@@ -9,8 +9,11 @@ CARPETA_DIAGRAMAS = Path(__file__).resolve().parent / "diagramas"
 _REGLAS_HERRAMIENTAS = """\
 Reglas para usar herramientas:
 - Para cualquier dato de eventos (qué hay, fechas, precios, disponibilidad) usa SIEMPRE
-  buscar_eventos; no respondas de memoria. Si preguntan por un mes concreto, usa el
-  filtro mes con formato AAAA-MM (p. ej. "2026-12").
+  buscar_eventos; no respondas de memoria. Pasa siempre los filtros que conozcas
+  (ciudad, categoría y mes) en vez de buscar sin filtros.
+- Si la pregunta habla de un mes («en diciembre», «ese mes», «el mismo mes que…»),
+  usa SIEMPRE el filtro mes con formato AAAA-MM (p. ej. "2026-12"), deduciéndolo de
+  la fecha que ya conozcas si hace falta.
 - Para el estado de un pedido usa SIEMPRE consultar_pedido. Necesitas el id del pedido
   (p. ej. EH-1001) y el email de compra; si falta alguno, pídelo antes de llamar.
   Si la herramienta no lo verifica, no des pistas sobre si el pedido existe.

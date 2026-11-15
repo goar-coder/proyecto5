@@ -15,6 +15,7 @@ Los tests **no llaman a OpenAI** y no modifican `data/`. La fixture `datos_tempo
 | [tests/test_chain.py](../tests/test_chain.py) | La cadena LCEL inyecta las políticas y las reglas en el *system* y devuelve `str` (con un modelo falso) |
 | [tests/test_agent_flow.py](../tests/test_agent_flow.py) | Agente real con un modelo falso guionizado: búsqueda, interrupción antes de reservar (sin descontar stock), 409 lógico con una acción pendiente, aprobación (descuenta) y rechazo (no descuenta) |
 | [tests/test_api.py](../tests/test_api.py) | Endpoints con `TestClient`: página `/`, 503 sin clave, flujo `/chat` → pendiente → 409 → `/chat/confirmar` |
+| [tests/test_grafos.py](../tests/test_grafos.py) | Versiones LangGraph v1–v4 (detalle en [langgraph_pruebas.md](langgraph_pruebas.md#tests-automáticos)) |
 
 ## Demo de entrega
 

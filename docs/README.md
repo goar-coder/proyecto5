@@ -20,6 +20,11 @@ Está hecho con **LangChain v1** (`create_agent`), **LangGraph** (checkpointer e
 | [datos.md](datos.md) | Formato de `events.json`, `orders.json` y `policies.md` |
 | [pruebas.md](pruebas.md) | Tests, demo de entrega y página web de prueba |
 | [conversacion_prueba.md](conversacion_prueba.md) | Transcripción real generada por la demo |
+| **Versión LangGraph** | |
+| [langgraph_pruebas.md](langgraph_pruebas.md) | **Cómo probar** las 4 versiones del grafo (`grafos/`), los diagramas y la demo de entrega |
+| [cambios_codigo.md](cambios_codigo.md) | Cambios de código de la versión LangGraph: ficheros nuevos y modificados y decisiones de diseño |
+| [cambios_datos.md](cambios_datos.md) | Cambios en `data/` para la versión LangGraph (pedidos `EH-xxxx`, conciertos en Madrid) |
+| [entrega_langgraph.md](entrega_langgraph.md) | Prueba de entrega generada por `scripts/demo_grafos.py`: diagramas v1 y v4, herramientas encadenadas y `get_state` |
 
 ## Inicio rápido
 
