@@ -76,3 +76,29 @@ def test_v2_sin_checkpointer_no_recuerda():
     grafo.invoke({"messages": [HumanMessage("me llamo Laura")]})
     estado = grafo.invoke({"messages": [HumanMessage("¿cómo me llamo?")]})
     assert estado["messages"][-1].text == "vistos: ¿cómo me llamo?"
+
+
+# --- Versión 3: memoria ------------------------------------------------------
+
+from grafos import v3_memoria as v3  # noqa: E402
+
+
+def test_v3_hilos_aislados_y_get_state():
+    grafo = v3.construir_grafo(ModeloQueRecuerda(messages=iter([]), recibido=[]))
+    resultados = v3.demo_hilos(grafo)
+    # hilo-2 solo ve su propia pregunta; hilo-1 ve también lo que se dijo antes en hilo-1
+    assert resultados[1][2] == "vistos: ¿Cómo me llamo?"
+    assert "me llamo Laura" in resultados[2][2] and resultados[2][2].endswith("¿Cómo me llamo?")
+
+    snapshot = grafo.get_state(v3.config_hilo("hilo-1"))
+    assert [m.type for m in snapshot.values["messages"]] == ["human", "ai", "human", "ai"]
+    assert snapshot.next == ()
+    assert len(grafo.get_state(v3.config_hilo("hilo-2")).values["messages"]) == 2
+
+    texto = v3.formatear_estado(grafo, "hilo-1")
+    assert "mensajes guardados: 4" in texto and "[4] ai:" in texto
+
+
+def test_v3_hilo_nuevo_esta_vacio():
+    grafo = v3.construir_grafo(ModeloQueRecuerda(messages=iter([]), recibido=[]))
+    assert grafo.get_state(v3.config_hilo("nadie")).values == {}
